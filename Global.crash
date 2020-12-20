@@ -1,0 +1,30 @@
+[General]
+loglevel = notify
+interface = 127.0.0.1
+skip-proxy = 127.0.0.1, 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 100.64.0.0/10, localhost, *.local
+ipv6 = false
+dns-server = system, 114.114.114.114
+exclude-simple-hostnames = true
+enhanced-mode-by-rule = true
+
+[Proxy]
+ss = custom, SS_SERVER_IP, 443, chacha20-ietf-poly1305, PASSWORD, http://7xpt4s.com1.z0.glb.clouddn.com/SSEncrypt.module
+local-socks5 = socks5, 127.0.0.1, 8080
+
+[Proxy Group]
+Proxy = select, ss, local-socks5
+
+[Rule]
+# LAN
+DOMAIN-SUFFIX,local,DIRECT
+IP-CIDR,192.168.0.0/16,DIRECT
+IP-CIDR,10.0.0.0/8,DIRECT
+IP-CIDR,172.16.0.0/12,DIRECT
+IP-CIDR,127.0.0.0/8,DIRECT
+IP-CIDR,100.64.0.0/10,DIRECT
+
+# Final
+FINAL,Proxy
+
+[URL Rewrite]
+^http://www.google.cn https://www.google.com
